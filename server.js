@@ -7,18 +7,26 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 
+
+
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
-app.use(express.static(path.join(__dirname,".." ,"CampusFoodorderingSystem")));
+app.use(cors({
+    origin: [
+    'http://localhost:3001',
+    'http://127.0.0.1:5500',
+    'https://deji985.github.io'
+  ],
+  credentials: true
+}));
 
-const pool=new pg.Pool({
-    connectionString :"postgresql://deji:00LRSX3CgaeA4OkCcdLIN9hEIagUgM28@dpg-d4i4rumr433s73c6khf0-a.oregon-postgres.render.com/food_ordering_db",
-    ssl:{
-        require:true,
-        rejectUnauthorized:false
-    }
+
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 pool.on('connect',()=>{
