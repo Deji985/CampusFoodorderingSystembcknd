@@ -15,11 +15,11 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: [
     'http://localhost:3001',
-    'http://127.0.0.1:5500',
     'https://deji985.github.io'
   ],
   credentials: true
 }));
+app.use(express.json());
 
 
 const pool = new pg.Pool({
